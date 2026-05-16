@@ -1,8 +1,8 @@
-Supabase Debugging Lab
+**Supabase Debugging Lab**
 
 A full-stack backend debugging sandbox simulating real-world Supabase Support Engineering scenarios including Auth, JWT validation, Row Level Security (RLS), Storage, and Edge Functions with stress testing.
 
- Overview
+ **Overview**
 
 This project replicates production-level issues faced in backend systems and demonstrates how to debug:
 
@@ -14,7 +14,8 @@ Load testing with curl-based stress tools
 
 It acts as a Support Engineer / SRE troubleshooting playground.
 
-Architecture
+**Architecture**
+
 Client (Node / Python / Browser)
         ↓
 Supabase Edge Function (webhook-handler)
@@ -24,7 +25,9 @@ JWT Validation (Auth Service)
 PostgreSQL (RLS Protected Tables)
         ↓
 Storage (S3-compatible)
-⚙️ Tech Stack
+
+ **Tech Stack**
+
 Supabase (Auth, DB, Storage, Edge Functions)
 PostgreSQL (RLS policies)
 Deno (Edge Functions runtime)
@@ -33,7 +36,8 @@ Python client
 Bash scripts (stress testing)
 curl (API simulation)
 
-Project Structure
+**Project Structure**
+
 supabase-debug-lab/
 ├── browser-client/
 ├── node-client/
@@ -53,7 +57,9 @@ supabase-debug-lab/
 │   ├── migrations/
 ├── docker-compose.yml
 └── README.md
- Features Implemented
+
+ **Features Implemented**
+
 1. JWT Authentication Debugging
 
 Edge Function validates Supabase JWT:
@@ -123,18 +129,20 @@ Valid JWT
 200 OK (100 requests)
 Invalid JWT
 401 Unauthorized (expected failure)
- Real Support Scenarios Simulated
-Scenario 1 — File Upload Fails
+ 
+ **Real Support Scenarios Simulated**
+ 
+**Scenario 1 — File Upload Fails**
 
 Root Cause:
 Missing INSERT policy in Storage bucket
 
-Scenario 2 — Empty API Response
+**Scenario 2 — Empty API Response**
 
 Root Cause:
 RLS policy blocking SELECT queries
 
-Scenario 3 — Edge Function returns Invalid JWT
+**Scenario 3 — Edge Function returns Invalid JWT**
 
 Root Cause:
 Malformed Authorization header or expired token
@@ -145,7 +153,9 @@ Supabase Edge Function execution lifecycle
 RLS policy behavior in PostgreSQL
 Debugging authentication vs authorization issues
 Load testing backend APIs using curl scripts
- How to Run
+
+ **How to Run**
+
 1. Start Supabase locally
 supabase start
 2. Generate JWT token
@@ -159,7 +169,7 @@ curl -i http://127.0.0.1:54321/functions/v1/webhook-handler \
 -d '{"event":"test.login"}'
 4. Run stress test
 bash scripts/stress-test.sh
- Portfolio Value
+ **Portfolio Value**
 
 This project demonstrates:
 
@@ -168,11 +178,14 @@ API authentication troubleshooting
 Database security (RLS)
 Production-like failure simulation
 Load testing & system validation
- Future Improvements
+
+** Future Improvements**
+
 Grafana monitoring dashboard
 Prometheus metrics for Edge Functions
 CI/CD GitHub Actions tests
 Automated failure injection system
 Real-time debugging UI
- Author
+
+** Author**
 Aishwarya Ganesh
