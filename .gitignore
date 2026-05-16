@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+venv/
+
+# env
+.env
+.env.*
+
+# supabase local
+.supabase/
+*.log
+
+# OS
+.DS_Store

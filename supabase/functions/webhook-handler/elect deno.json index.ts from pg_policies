@@ -1,0 +1,11 @@
+ schemaname | tablename |         policyname          | permissive |      roles      |  cmd   |                                                qual                                                |                                             with_check                                             
+------------+-----------+-----------------------------+------------+-----------------+--------+----------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------
+ public     | profiles  | Users can view own profile  | PERMISSIVE | {public}        | SELECT | (auth.uid() = id)                                                                                  | 
+ public     | notes     | own data only               | PERMISSIVE | {public}        | ALL    | (auth.uid() = user_id)                                                                             | 
+ public     | documents | Users manage own docs       | PERMISSIVE | {public}        | ALL    | (auth.uid() = owner_id)                                                                            | 
+ storage    | objects   | Users can view own files    | PERMISSIVE | {authenticated} | SELECT | ((bucket_id = 'documents-private'::text) AND ((auth.uid())::text = (storage.foldername(name))[1])) | 
+ storage    | objects   | Users can upload own files  | PERMISSIVE | {authenticated} | INSERT |                                                                                                    | ((bucket_id = 'documents-private'::text) AND ((auth.uid())::text = (storage.foldername(name))[1]))
+ storage    | objects   | Users read own files        | PERMISSIVE | {authenticated} | SELECT | (owner = auth.uid())                                                                               | 
+ storage    | objects   | Allow authenticated uploads | PERMISSIVE | {authenticated} | INSERT |                                                                                                    | (bucket_id = 'documents-public'::text)
+(7 rows)
+

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Supabase Browser Upload</title>
+</head>
+
+<body>
+
+  <h1>Supabase Upload Test</h1>
+
+  <input type="file" id="fileInput" />
+
+  <br><br>
+
+  <button onclick="uploadPublic()">
+    Upload Public
+  </button>
+
+  <button onclick="uploadPrivate()">
+    Upload Private
+  </button>
+
+  <button onclick="testPublicUrl()">
+    Test Public URL
+  </button>
+
+  <script type="module">
+
+    import { createClient }
+      from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    const supabase = createClient(
+      'http://127.0.0.1:54321',
+      'sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH'
+    )
+
+    // LOGIN
+    async function login() {
+
+      const { data, error } =
+        await supabase.auth.signInWithPassword({
+          email: 'debug1@example.com',
+          password: 'password123'
+        })
+
+      console.log('LOGIN DATA:', data)
+      console.log('LOGIN ERROR:', error)
+    }
+
+    // PUBLIC UPLOAD
+    async function uploadPublic() {
+
+      await login()
+
+      const file =
+        document.getElementById('fileInput').files[0]
+
+      if (!file) {
+        alert('Choose a file')
+        return
+      }
+
+      const { data, error } =
+        await supabase.storage
+          .from('documents-public')
+          .upload(file.name, file, {
+            upsert: true
+          })
+
+      console.log('PUBLIC UPLOAD:', data)
+      console.log('PUBLIC ERROR:', error)
+
+      alert('Public upload done')
+    }
+
+    // PRIVATE UPLOAD
+    async function uploadPrivate() {
+
+      await login()
+
+      const file =
+        document.getElementById('fileInput').files[0]
+
+      if (!file) {
+        alert('Choose a file')
+        return
+      }
+
+      const { data, error } =
+        await supabase.storage
+          .from('documents-private')
+          .upload(file.name, file, {
+            upsert: true
+          })
+
+      console.log('PRIVATE UPLOAD:', data)
+      console.log('PRIVATE ERROR:', error)
+
+      alert('Private upload done')
+    }
+
+    // TEST PUBLIC URL
+    async function testPublicUrl() {
+
+      const file =
+        document.getElementById('fileInput').files[0]
+
+      if (!file) {
+        alert('Choose a file first')
+        return
+      }
+
+      const { data } =
+        supabase.storage
+          .from('documents-public')
+          .getPublicUrl(file.name)
+
+      console.log('PUBLIC URL:', data.publicUrl)
+
+      window.open(data.publicUrl, '_blank')
+    }
+
+    window.uploadPublic = uploadPublic
+    window.uploadPrivate = uploadPrivate
+    window.testPublicUrl = testPublicUrl
+
+  </script>
+
+</body>
+
+</html>

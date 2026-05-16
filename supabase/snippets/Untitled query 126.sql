@@ -1,0 +1,1 @@
+alter table notes enable row level security;
