@@ -169,6 +169,7 @@ curl -i http://127.0.0.1:54321/functions/v1/webhook-handler \
 -d '{"event":"test.login"}'
 4. Run stress test
 bash scripts/stress-test.sh
+
  **Portfolio Value**
 
 This project demonstrates:
@@ -179,7 +180,7 @@ Database security (RLS)
 Production-like failure simulation
 Load testing & system validation
 
-** Future Improvements**
+**Future Improvements**
 
 Grafana monitoring dashboard
 Prometheus metrics for Edge Functions
@@ -187,5 +188,5 @@ CI/CD GitHub Actions tests
 Automated failure injection system
 Real-time debugging UI
 
-** Author**
+**Author**
 Aishwarya Ganesh
